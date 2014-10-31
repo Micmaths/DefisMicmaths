@@ -1,0 +1,60 @@
+body {
+	background-color: rgb(250,240,230);
+	font-family: sans-serif;
+	}
+
+h1 {
+	font-family: verdana;
+	color: rgb(50,30,30);
+	}
+
+h2 {
+	font-family: verdana;
+	color: rgb(100,60,60);
+	}
+
+#etapes {
+	font-size: 40px;
+	font-family: sans-serif;
+	}
+
+#ligneetape {
+	border: solid 1px black;
+	
+	}
+	
+	
+#lignefinetape {
+	color:rgb(0,100,200);
+	font-weight: bold;
+	}
+	
+#nombrefactorise {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	}
+	
+#nombrefactorise {
+	display: inline;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	}
+
+	#audessus {
+	display: inline;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width:100%;
+	height: 200px;
+	z-index:2;
+	}

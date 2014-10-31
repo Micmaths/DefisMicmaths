@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr" manifest="cache.appcache">
+  <head>
+		<meta charset="utf-8" />
+        <link rel="stylesheet" href="css/style.css" />
+
+    <title>Le défi Micmaths - Janvier 2015</title>
+  </head>
+
+  <body>
+
+	
+	
+	
+	<div style="width:49%; border:0px solid black; float:left; min-width: 510px;">
+
+	<center>
+		<h1>Multiplications de chiffres</h1>
+		<h2>Défi mathématique</h2>
+		<p style="max-width:700px; font-style:italic;">
+		Partant d'un nombre entier, on calcule le produit de ses chiffres. On répète ce procédé avec le nouveau nombre obtenu, jusqu'à tomber sur un nombre d'un seul chiffre.<br /><strong>Saurez-vous trouver un nombre produisant le plus grand nombre d'étapes possible ?</strong>
+		</p>
+    </center>
+	
+		<center>
+			<div style="height:70px; vertical align:middle;">
+			<input id="nombre" type="text" value="Entrez un nombre" size=15 style="width:500px; height:50px; font-size:40px; color:rgb(200,200,200); border: solid 2px rgb(0,100,200); margin:5px; vertical-align: middle; padding-left:10px;" onFocus="focusNombre()" onBlur="unFocusNombre()" onKeyPress="if (event.keyCode == 13) actu()"; />
+			</div>
+			<button onclick="actu()" style="width:500px; height:50px; border:2px solid rgb(0,100,200); background-color:rgb(50,130,205); margin:5px; font-size:30px; color:white;" >Calculer</button>
+		</center>
+		
+		<center>
+			<p id="etapes">	
+			</p>
+		</center>
+		
+	</div>
+	
+	<div style="width:49%; border:0px solid black; float:left; padding-top:25px;">
+		<!-- Description de l'énigme -->
+	</div>
+	
+	
+	<script>
+  
+		var Etapes = document.getElementById('etapes');
+		var i = 0;
+ 
+		function focusNombre() {
+			document.getElementById("nombre").style.border = "solid 3px rgb(0,100,200)";
+			document.getElementById("nombre").style.color = "rgb(100,100,100)";
+			if (document.getElementById("nombre").value=="Entrez un nombre")
+			document.getElementById("nombre").value="";
+		}
+
+		function unFocusNombre() {
+			document.getElementById("nombre").style.border = "solid 1px rgb(0,100,200)";
+			document.getElementById("nombre").style.color = "rgb(150,150,150)";
+			if (document.getElementById("nombre").value=="") {
+				document.getElementById("nombre").value="Entrez un nombre";
+				document.getElementById("nombre").style.color = "rgb(200,200,200)";
+				}
+		}
+	
+		function actu() { //fonction qui actualise les multiplications à partir du nombre indiqué
+			Etapes.innerHTML = "";
+			i= parseInt(document.getElementById('nombre').value, 10);
+			var j=0;
+			if (i>999999999999999 || i<0) {
+				alert("Veuillez entrer un nombre entier positif de moins de 15 chiffres.");
+				} else {
+				i= parseInt(document.getElementById('nombre').value, 10);
+				Etapes.innerHTML += i+"<br />";
+					while (i>9) {
+						j++;
+						var multipli = multiplication(i);
+						i = multiChiffres(i);
+						Etapes.innerHTML += "<div class='ligneetape' style='padding:5px; margin:2px;'><span class='nombrefactorise' style='display:none;'>"+multipli+"</span><span class='nombreentier'>"+i+"</span></div>";
+						}
+				Etapes.innerHTML += "<span id='lignefinetape'>"+j+" étapes"+"</span>";
+				}
+			dynamique();
+			}
+
+  
+		function multiChiffres(number) {  //fonction de calcul du produit des chiffres
+				var resultat	= 1,
+					nombre		= number,
+					initial = true;
+				while (nombre>0) {
+					resultat = resultat*(nombre%10);
+					nombre = (nombre-nombre%10)/10;
+				}
+				return resultat;
+		}
+	
+		function multiplication(number) {
+			var resultat	= "",
+					nombre		= number,
+					initial = true;
+				while (nombre>0) {
+					if (initial) {
+						initial = false;
+						} else {
+						resultat = "×"+resultat;
+						}
+						resultat = nombre%10+resultat;
+					nombre = (nombre-nombre%10)/10;
+				}
+				return resultat;
+		}
+	
+		function dynamique() {
+			var divetapes = document.getElementById('etapes');
+			var lignesetapes = divetapes.getElementsByTagName('div');
+
+			for (var i = 0, c = lignesetapes.length ; i < c ; i++) {
+				
+				lignesetapes[i].addEventListener('mouseover', function(e) {
+					e = e || window.event; // Compatibilité IE
+					var relatedTarget = e.relatedTarget || e.fromElement; // Idem
+
+					while (relatedTarget != e.target && relatedTarget.nodeName != 'BODY' && relatedTarget != document) {
+						relatedTarget = relatedTarget.parentNode;
+					}
+
+					if (relatedTarget != e.target) {
+						e.target.firstChild.setAttribute('style','display: inline; color:rgb(100,100,100);');
+						e.target.lastChild.setAttribute('style','display: none;');
+					}
+				}, false);
+				
+				
+				lignesetapes[i].addEventListener('mouseout', function(e) {
+					e = e || window.event; // Compatibilité IE
+					var relatedTarget = e.relatedTarget || e.toElement; // Idem
+
+					while (relatedTarget != e.target && relatedTarget.nodeName != 'BODY' && relatedTarget != document) {
+						relatedTarget = relatedTarget.parentNode;
+					}
+
+					if (relatedTarget != e.target) {
+						e.target.firstChild.setAttribute('style','display: none;');
+						e.target.lastChild.setAttribute('style','display: inline;');
+					}
+				}, false);
+			}
+		}
+		
+    </script>
+	
+  </body>
+</html>
